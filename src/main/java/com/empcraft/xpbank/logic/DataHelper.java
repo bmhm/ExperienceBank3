@@ -221,6 +221,10 @@ public class DataHelper {
     int result = 0;
     Connection connection = null;
 
+    if (uuid == null) {
+      return 0;
+    }
+
     try {
       connection = getConnection();
       PlayerExperienceDao ped = getDao(connection);
