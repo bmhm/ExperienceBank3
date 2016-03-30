@@ -20,11 +20,14 @@ import org.junit.Test;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.rule.PowerMockRule;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @PrepareForTest({ ExpBankConfig.class, JavaPlugin.class, Player.class })
 public class DataHelperTest {
 
+  private static final String TEST_PLAYER1 = "testPlayer1";
   @Rule
   public PowerMockRule rule = new PowerMockRule();
   private ExpBankConfig config;
@@ -41,6 +44,11 @@ public class DataHelperTest {
 
     DataHelper dh = new DataHelper(ylp, config);
     dh.createTableIfNotExists();
+
+    Player player1 = new OfflinePlayer(TEST_PLAYER1, server);
+    HashMap<UUID, Integer> players = new HashMap<UUID, Integer>();
+    players.put(player1.getUniqueId(), 0);
+    dh.bulkSaveEntriesToDb(players);
   }
 
   @Test
@@ -64,8 +72,53 @@ public class DataHelperTest {
   @Test
   public void testGetSavedExperienceFromPlayer_OfflinePlayer() throws DatabaseConnectorException {
     DataHelper dh = new DataHelper(ylp, config);
-    Player someone = new OfflinePlayer("testPlayer1", server);
+    Player someone = new OfflinePlayer(TEST_PLAYER1, server);
     int savedExperience = dh.getSavedExperience(someone);
+
+    Assert.assertEquals(0, savedExperience);
+  }
+
+  @Test
+  public void testGetSavedExperienceFromAll() throws DatabaseConnectorException {
+    DataHelper dh = new DataHelper(ylp, config);
+    Map<UUID, Integer> savedExperience = dh.getSavedExperience();
+
+    Assert.assertTrue(savedExperience.size() >= 1);
+  }
+
+  @Test
+  public void testBulkSaveEntry() throws DatabaseConnectorException {
+    DataHelper dh = new DataHelper(ylp, config);
+    HashMap<UUID, Integer> players = new HashMap<>();
+    UUID randomUUID = UUID.randomUUID();
+    players.put(randomUUID, 42);
+    dh.bulkSaveEntriesToDb(players);
+
+    int savedExperience = dh.getSavedExperience(randomUUID);
+
+    Assert.assertEquals(42, savedExperience);
+  }
+
+  @Test
+  public void testBulkSaveEntry_null() throws DatabaseConnectorException {
+    DataHelper dh = new DataHelper(ylp, config);
+    HashMap<UUID, Integer> players = null;
+    UUID randomUUID = UUID.randomUUID();
+    dh.bulkSaveEntriesToDb(players);
+
+    int savedExperience = dh.getSavedExperience(randomUUID);
+
+    Assert.assertEquals(0, savedExperience);
+  }
+
+  @Test
+  public void testBulkSaveEntry_empty() throws DatabaseConnectorException {
+    DataHelper dh = new DataHelper(ylp, config);
+    HashMap<UUID, Integer> players = new HashMap<>();
+    UUID randomUUID = UUID.randomUUID();
+    dh.bulkSaveEntriesToDb(players);
+
+    int savedExperience = dh.getSavedExperience(randomUUID);
 
     Assert.assertEquals(0, savedExperience);
   }
