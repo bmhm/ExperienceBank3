@@ -17,6 +17,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.rule.PowerMockRule;
 
@@ -121,6 +122,48 @@ public class DataHelperTest {
     int savedExperience = dh.getSavedExperience(randomUUID);
 
     Assert.assertEquals(0, savedExperience);
+  }
+
+  @Test
+  public void testCheckForMaximumWithdrawPlayer() {
+    Player aPlayer = new OfflinePlayer(TEST_PLAYER1, server);
+    int checkForMaximumWithdraw = DataHelper.checkForMaximumWithdraw(aPlayer, 100, config);
+
+    Assert.assertEquals(0, checkForMaximumWithdraw);
+  }
+
+  @Test
+  public void testCheckForMaximumWithdrawPlayer_null() {
+    Player aPlayer = null;
+    int checkForMaximumWithdraw = DataHelper.checkForMaximumWithdraw(aPlayer, 100, config);
+
+    Assert.assertEquals(0, checkForMaximumWithdraw);
+  }
+
+  @Test
+  public void testCheckForMaximumWithdrawPlayer_random() throws DatabaseConnectorException {
+    DataHelper dh = new DataHelper(ylp, config);
+    HashMap<UUID, Integer> players = new HashMap<>();
+    UUID randomUUID = UUID.randomUUID();
+    players.put(randomUUID, 42);
+    dh.bulkSaveEntriesToDb(players);
+    config.getExperienceCache().addPlayer(randomUUID);
+    config.getExperienceCache().get(randomUUID).set(42);
+
+    int savedExperience = dh.getSavedExperience(randomUUID);
+    Assert.assertEquals(42, savedExperience);
+
+    Player fourtytwoplayer = PowerMockito.mock(Player.class);
+    PowerMockito.doReturn(randomUUID).when(fourtytwoplayer).getUniqueId();
+    PowerMockito.doReturn("testPlayer2").when(fourtytwoplayer).getName();
+    PowerMockito.doReturn(0).when(fourtytwoplayer).getTotalExperience();
+
+    savedExperience = dh.getSavedExperience(fourtytwoplayer);
+    Assert.assertEquals(42, savedExperience);
+
+    int checkForMaximumWithdraw = DataHelper.checkForMaximumWithdraw(fourtytwoplayer, 100, config);
+
+    Assert.assertEquals(42, checkForMaximumWithdraw);
   }
 
 }

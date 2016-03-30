@@ -290,7 +290,17 @@ public class DataHelper {
     return success;
   }
 
-  public static int checkForMaximumWithdraw(Player player, int toWithdraw, final ExpBankConfig config) {
+  public static int checkForMaximumWithdraw(Player player, int toWithdraw,
+      final ExpBankConfig config) {
+    if (player == null) {
+      return 0;
+    }
+
+    if (!config.getExperienceCache().containsKey(player.getUniqueId())) {
+      config.getLogger().warning("Player not found! " + player.getUniqueId());
+      return 0;
+    }
+
     int inBank = config.getExperienceCache().get(player.getUniqueId()).get();
 
     int actualWithdraw = checkForMaxumumWithdraw(inBank, toWithdraw);
@@ -320,7 +330,8 @@ public class DataHelper {
     return actualWithdrawAllowed;
   }
 
-  public static int checkForMaximumDeposit(Player player, int toDeposit, final ExpBankConfig config) {
+  public static int checkForMaximumDeposit(Player player, int toDeposit,
+      final ExpBankConfig config) {
     int maxDeposit = config.getMaxStorageForPlayer(player);
     config.getLogger().log(Level.INFO,
         "Player can deposit at max: " + Integer.toString(maxDeposit));
