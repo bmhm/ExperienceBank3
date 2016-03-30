@@ -8,10 +8,34 @@ import org.junit.Test;
 public class DepositWithdrawTest {
 
   @Test
-  public void testCheckForMaximumDeposit_bankFull() {
+  public void testCheckForMaximumDeposit_bankEqual() {
     int inBank = 825;
     int depositAmount = 100;
     int inHand = 100;
+    int maxInBankAllowed = 825;
+
+    int checkForMaximumDeposit = DataHelper.checkForMaximumDeposit(inBank, depositAmount, inHand,
+        maxInBankAllowed);
+    Assert.assertEquals(0, checkForMaximumDeposit);
+  }
+
+  @Test
+  public void testCheckForMaximumDeposit_bankFull() {
+    int inBank = 800;
+    int depositAmount = 50;
+    int inHand = 100;
+    int maxInBankAllowed = 825;
+
+    int checkForMaximumDeposit = DataHelper.checkForMaximumDeposit(inBank, depositAmount, inHand,
+        maxInBankAllowed);
+    Assert.assertEquals(25, checkForMaximumDeposit);
+  }
+
+  @Test
+  public void testCheckForMaximumDeposit_handFull() {
+    int inBank = 825;
+    int depositAmount = 100;
+    int inHand = 150;
     int maxInBankAllowed = 825;
 
     int checkForMaximumDeposit = DataHelper.checkForMaximumDeposit(inBank, depositAmount, inHand,
@@ -44,9 +68,30 @@ public class DepositWithdrawTest {
   }
 
   @Test
+  public void testCheckForMaximumDeposit_lessThanZero() {
+    int inBank = 10;
+    int depositAmount = -100;
+    int inHand = 50;
+    int maxInBankAllowed = 825;
+
+    int checkForMaximumDeposit = DataHelper.checkForMaximumDeposit(inBank, depositAmount, inHand,
+        maxInBankAllowed);
+    Assert.assertEquals(0, checkForMaximumDeposit);
+  }
+
+  @Test
   public void testCheckForMaximumWithdraw_bankEmpty() {
     int inBank = 0;
     int withdrawAmount = 100;
+
+    int actualWithdrawAmount = DataHelper.checkForMaxumumWithdraw(inBank, withdrawAmount);
+    Assert.assertEquals(0, actualWithdrawAmount);
+  }
+
+  @Test
+  public void testCheckForMaximumWithdraw_lessThanZero() {
+    int inBank = 0;
+    int withdrawAmount = -75;
 
     int actualWithdrawAmount = DataHelper.checkForMaxumumWithdraw(inBank, withdrawAmount);
     Assert.assertEquals(0, actualWithdrawAmount);
