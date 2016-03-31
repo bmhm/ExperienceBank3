@@ -90,7 +90,7 @@ public class DepositWithdrawTest {
 
   @Test
   public void testCheckForMaximumWithdraw_lessThanZero() {
-    int inBank = 0;
+    int inBank = 100;
     int withdrawAmount = -75;
 
     int actualWithdrawAmount = DataHelper.checkForMaxumumWithdraw(inBank, withdrawAmount);

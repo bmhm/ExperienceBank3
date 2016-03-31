@@ -166,4 +166,38 @@ public class DataHelperTest {
     Assert.assertEquals(42, checkForMaximumWithdraw);
   }
 
+  @Test
+  public void testCheckForMaximumDepositPlayer_nullPlayer() throws DatabaseConnectorException {
+    Player aPlayer = null;
+    int checkForMaximumWithdraw = DataHelper.checkForMaximumWithdraw(aPlayer, 100, config);
+
+    Assert.assertEquals(0, checkForMaximumWithdraw);
+  }
+
+  @Test
+  public void testCheckForMaximumWithdrawPlayer_testplayer3() throws DatabaseConnectorException {
+    DataHelper dh = new DataHelper(ylp, config);
+    HashMap<UUID, Integer> players = new HashMap<>();
+    UUID randomUUID = UUID.randomUUID();
+    players.put(randomUUID, 42);
+    dh.bulkSaveEntriesToDb(players);
+    config.getExperienceCache().addPlayer(randomUUID);
+    config.getExperienceCache().get(randomUUID).set(42);
+
+    int savedExperience = dh.getSavedExperience(randomUUID);
+    Assert.assertEquals(42, savedExperience);
+
+    Player fourtytwoplayer = PowerMockito.mock(Player.class);
+    PowerMockito.doReturn(randomUUID).when(fourtytwoplayer).getUniqueId();
+    PowerMockito.doReturn("testPlayer3").when(fourtytwoplayer).getName();
+    PowerMockito.doReturn(1200).when(fourtytwoplayer).getTotalExperience();
+
+    savedExperience = dh.getSavedExperience(fourtytwoplayer);
+    Assert.assertEquals(42, savedExperience);
+
+    int checkForMaximumDeposit = DataHelper.checkForMaximumDeposit(fourtytwoplayer, 1200, config);
+
+    Assert.assertEquals(825 - 42, checkForMaximumDeposit);
+  }
+
 }
