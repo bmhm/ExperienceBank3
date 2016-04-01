@@ -9,25 +9,24 @@ import com.empcraft.xpbank.threads.BukkitChangePlayerExperienceThread;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Manages Experience Cache.
  */
-public class ExperienceCache extends HashMap<UUID, AtomicInteger> {
+public class ExperienceCache extends ConcurrentHashMap<UUID, AtomicInteger> {
   /**
    * Serial.
    */
   private static final long serialVersionUID = -8729259291859204345L;
 
   public AtomicInteger addPlayer(UUID uuid) {
-    if (this.containsKey(uuid)) {
-      return this.get(uuid);
-    }
+    AtomicInteger atomicInteger = new AtomicInteger();
+    this.putIfAbsent(uuid, atomicInteger);
 
-    return this.put(uuid, new AtomicInteger());
+    return atomicInteger;
   }
 
   public void addExperience(Player player, int delta, final ExpBankConfig config,
