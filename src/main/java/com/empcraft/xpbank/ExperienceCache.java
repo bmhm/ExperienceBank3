@@ -31,14 +31,12 @@ public class ExperienceCache extends ConcurrentHashMap<UUID, AtomicInteger> {
 
   public void addExperience(Player player, int delta, final ExpBankConfig config,
       final YamlLanguageProvider language) {
-    if (this.containsKey(player.getUniqueId())) {
-      addPlayer(player.getUniqueId());
-    }
+    // contains putIfAbsent.
+    addPlayer(player.getUniqueId());
 
-    AtomicInteger playerInCache = this.get(player.getUniqueId());
+    int newValue = this.get(player.getUniqueId()).addAndGet(delta);
 
-    playerInCache.addAndGet(delta);
-    config.getLogger().info("Player new experience in bank: " + playerInCache.get());
+    config.getLogger().info("Player new experience in bank: " + newValue);
 
     BukkitChangePlayerExperienceThread experienceThread = new BukkitChangePlayerExperienceThread(
         player, delta, config, language);
