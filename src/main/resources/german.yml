@@ -1,0 +1,16 @@
+## You should not edit this file but you can edit a copy (e.g. rename it to gibberish.yml)
+## The "language: english" in the "config.yml" should change to reflect this (e.g. "language: gibberish")
+## NOTE: messages that are blank will not be sent to players.
+MYSQL: "&fMySQL aktiviert - stelle eine Verbindung her."
+MYSQL_CONNECT: "&cKonnte keine MySQL-Verbindung herstellen. Stelle sicher, dass sie in der Datei config.yml korrekt eingestellt ist."
+MYSQL_GET: "&a[&7EXPBANK&a]&f Uh oh! Konnte MySQL-Datenbank nicht erreichen!"
+YAML: "&Benutze YAML als Speicher-Backend."
+CONVERT: "&fKonvertiere alte YAML-Konfiguration nach MySQL. Bitte warten..."
+SUCCESS: "&aErfolgreich!"
+DONE: "&aErledigt!"
+CREATE: "&7Erfolgreich ein &aEXP BANK&7-Schild erstellt!"
+NOPERM: "&7Fehlende Berechtigung: &c{STRING}"
+BOTTLE_ERROR: "&7Du hast nicht genug &cEXP&7 um diese zu füllen!"
+EXP_NONE: "&7Du hast &cgar keine&7 EXP."
+EXP_LIMIT: "&7Du &cdarfst keine&7 weitere EXP speichern."
+LOST: "&7Entschuldige Kumpel, du &ckönntest EXP verloren&7 haben."
