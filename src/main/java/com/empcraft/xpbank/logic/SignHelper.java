@@ -72,14 +72,10 @@ public final class SignHelper {
       return;
     }
 
-    String[] lines = SignHelper.getSignText(player, config);
-
-    if (lines == null) {
-      config.getLogger().finer("sign has no text.");
-      return;
-    }
+    String[] renderedlines = SignHelper.getSignText(player, config);
 
     sign.update();
+    player.sendSignChange(location, renderedlines);
   }
 
   public static boolean isExperienceBankSignBlock(final Block block, final ExpBankConfig config) {
