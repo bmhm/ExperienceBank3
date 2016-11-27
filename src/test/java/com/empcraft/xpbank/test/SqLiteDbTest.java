@@ -129,7 +129,6 @@ public class SqLiteDbTest {
 
     long duration = endtime - starttime;
     config.getLogger().info("Insert took [" + duration + "]ms.");
-    Assert.assertTrue(10000 > duration);
 
     int points = dh.getSavedExperience(testplayer);
     Assert.assertEquals(500, points);
