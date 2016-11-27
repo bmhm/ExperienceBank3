@@ -72,6 +72,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
 public class FakeServer implements Server {
+  public static final UUID TESTPLAYER1_UUID = UUID.fromString("3c9ebe1a-9098-43fd-bc0c-a369b76817ba");
   private static final Logger LOG = LoggerFactory.getLogger(FakeServer.class);
   private List<Player> players = new ArrayList<Player>();
   private final List<World> worlds = new ArrayList<World>();
@@ -428,8 +429,8 @@ public class FakeServer implements Server {
     pluginManager.callEvent(new PlayerJoinEvent(base1, null));
   }
 
-  public OfflinePlayer createPlayer(String name) {
-    OfflinePlayer player = new OfflinePlayer(name, this);
+  public OfflinePlayer createPlayer(UUID playerUuid) {
+    OfflinePlayer player = new OfflinePlayer(playerUuid, this);
     player.setLocation(new Location(worlds.get(0), 0, 0, 0, 0, 0));
     return player;
   }
@@ -545,7 +546,7 @@ public class FakeServer implements Server {
 
   @Override
   public org.bukkit.OfflinePlayer getOfflinePlayer(UUID playerUuid) {
-    if ("3c9ebe1a-9098-43fd-bc0c-a369b76817ba".equals(playerUuid.toString())) {
+    if (TESTPLAYER1_UUID.equals(playerUuid)) {
       return createOPlayer("testPlayer1");
     }
 
@@ -636,7 +637,7 @@ public class FakeServer implements Server {
       @Override
       public UUID getUniqueId() {
         if (string == "testPlayer1") {
-          return UUID.fromString("3c9ebe1a-9098-43fd-bc0c-a369b76817ba");
+          return TESTPLAYER1_UUID;
         } else if (string == "npc1") {
           return null;
         }
@@ -882,7 +883,7 @@ public class FakeServer implements Server {
   }
 
   @Override
-  public Inventory createInventory(InventoryHolder arg0, InventoryType arg1, String arg2) {
+  public Inventory createInventory(InventoryHolder invHolder, InventoryType arg1, String arg2) {
     throw new UnsupportedOperationException("Not supported yet.");
   }
 
@@ -1007,7 +1008,7 @@ public class FakeServer implements Server {
     return null;
   }
 
-  class FakePluginManager implements PluginManager {
+  static class FakePluginManager implements PluginManager {
     ArrayList<RegisteredListener> listeners = new ArrayList<RegisteredListener>();
 
     @Override

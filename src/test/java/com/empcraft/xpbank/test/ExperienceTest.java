@@ -15,20 +15,19 @@ public class ExperienceTest {
    * Logger.
    */
   private static final Logger LOG = LoggerFactory.getLogger(ExperienceTest.class);
-  private static final String PLAYERNAME = "testPlayer1";
   private FakeServer server;
 
   @Before
   public void setUp() throws Exception {
     server = new FakeServer();
     server.createWorld("testWorld", Environment.NORMAL);
-    Player base1 = server.createPlayer(PLAYERNAME);
+    Player base1 = server.createPlayer(FakeServer.TESTPLAYER1_UUID);
     server.addPlayer(base1);
   }
 
   @Test
   public void testPlayerNoXp() {
-    Player offlinePlayer = server.getPlayer(PLAYERNAME);
+    Player offlinePlayer = server.getPlayer(FakeServer.TESTPLAYER1_UUID);
     int totalExperience = offlinePlayer.getTotalExperience();
 
     Assert.assertEquals(0, totalExperience);

@@ -21,20 +21,11 @@ public class PacketSignSendListener extends PacketAdapter {
   private ExpBankConfig config;
 
   public PacketSignSendListener(ExpBankConfig config) {
-    super(config.getPlugin(), ListenerPriority.LOW, PacketType.Play.Server.UPDATE_SIGN);
+    super(config.getPlugin(), ListenerPriority.LOW, PacketType.Play.Server.TILE_ENTITY_DATA);
 
     this.config = config;
   }
 
-  /*
-   * (non-Javadoc)
-   *
-   * @see com.comphenix.protocol.events.PacketAdapter#onPacketSending(com.comphenix.protocol.events.
-   * PacketEvent) Source:
-   * https://github.com/blablubbabc/IndividualSigns/blob/master/src/main/java/de/blablubbabc/insigns
-   * /InSigns.java
-   *
-   */
   @Override
   public void onPacketSending(PacketEvent event) {
     PacketContainer signUpdatePacket = event.getPacket();

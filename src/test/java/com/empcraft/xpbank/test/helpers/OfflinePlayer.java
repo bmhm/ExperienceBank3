@@ -73,6 +73,7 @@ public class OfflinePlayer implements Player {
     this.name = base.getName();
   }
 
+  @Deprecated
   public OfflinePlayer(final String name, final Server server) {
     this.server = server;
     this.world = server.getWorlds().get(0);
@@ -1274,11 +1275,11 @@ public class OfflinePlayer implements Player {
     if (base.getName() == null && getName() != null) {
       if (banned) {
         server.getBanList(BanList.Type.NAME).addBan(getName(), null, null, null);
-      } else {
-        server.getBanList(BanList.Type.NAME).pardon(getName());
+        return;
       }
+
+      server.getBanList(BanList.Type.NAME).pardon(getName());
     }
-    base.setBanned(banned);
   }
 
   @Override
