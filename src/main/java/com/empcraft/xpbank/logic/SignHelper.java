@@ -60,6 +60,9 @@ public final class SignHelper {
       return;
     }
 
+    /*
+     * Only available locations should occur here anyway.
+     */
     if (!location.getChunk().isLoaded()) {
       config.getLogger().finer("chunk is not loaded.");
       return;

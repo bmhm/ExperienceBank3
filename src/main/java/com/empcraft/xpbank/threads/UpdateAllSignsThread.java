@@ -2,16 +2,17 @@ package com.empcraft.xpbank.threads;
 
 import com.empcraft.xpbank.ExpBankConfig;
 import com.empcraft.xpbank.logic.SignHelper;
+import com.empcraft.xpbank.util.ChunkUtil;
+import com.google.common.base.Preconditions;
 
 import org.bukkit.Chunk;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class UpdateAllSignsThread implements Runnable {
@@ -29,21 +30,11 @@ public class UpdateAllSignsThread implements Runnable {
 
   @Override
   public void run() {
-    if (null == player || !player.isOnline()) {
-      return;
-    }
+    Preconditions.checkNotNull(player, "Player in UpdateAllSignsThread.");
+    Preconditions.checkState(player.isOnline(), "Player not online in UpdateAllSignsThread");
 
-    List<BlockState> states = new ArrayList<>();
-    World world = player.getWorld();
-    List<Chunk> chunks = Arrays.asList(
-        new Chunk[] { location.getChunk(), world.getChunkAt(location.add(16.0D, 0.0D, 0.0D)),
-            world.getChunkAt(location.add(16.0D, 0.0D, 16.0D)),
-            world.getChunkAt(location.add(0.0D, 0.0D, 16.0D)),
-            world.getChunkAt(location.add(-16.0D, 0.0D, 0.0D)),
-            world.getChunkAt(location.add(-16.0D, 0.0D, -16.0D)),
-            world.getChunkAt(location.add(0.0D, 0.0D, -16.0D)),
-            world.getChunkAt(location.add(16.0D, 0.0D, -16.0D)),
-            world.getChunkAt(location.add(-16.0D, 0.0D, 16.0D)) });
+    final Collection<Chunk> chunks = ChunkUtil.getLoadedChunksAroundLocation(location);
+    final List<BlockState> states = new ArrayList<>();
 
     for (Chunk chunk : chunks) {
       for (BlockState state : chunk.getTileEntities()) {

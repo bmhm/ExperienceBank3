@@ -2,10 +2,10 @@ package com.empcraft.xpbank.listeners;
 
 import com.empcraft.xpbank.ExpBankConfig;
 import com.empcraft.xpbank.logic.SignHelper;
+import com.empcraft.xpbank.util.ChunkUtil;
 
 import org.bukkit.Chunk;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,7 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -30,14 +30,7 @@ public class SignChangeUpdateSign implements Listener {
   @EventHandler
   public void onSignChange(SignChangeEvent event) {
     final Location loc = event.getBlock().getLocation();
-    World world = loc.getWorld();
-    List<Chunk> chunks = Arrays.asList(new Chunk[] { loc.getChunk(),
-        world.getChunkAt(loc.add(16.0D, 0.0D, 0.0D)), world.getChunkAt(loc.add(16.0D, 0.0D, 16.0D)),
-        world.getChunkAt(loc.add(0.0D, 0.0D, 16.0D)), world.getChunkAt(loc.add(-16.0D, 0.0D, 0.0D)),
-        world.getChunkAt(loc.add(-16.0D, 0.0D, -16.0D)),
-        world.getChunkAt(loc.add(0.0D, 0.0D, -16.0D)),
-        world.getChunkAt(loc.add(16.0D, 0.0D, -16.0D)),
-        world.getChunkAt(loc.add(-16.0D, 0.0D, 16.0D)) });
+    final Collection<Chunk> chunks = ChunkUtil.getLoadedChunksAroundLocation(loc);
 
     List<Player> myplayers = new ArrayList<>();
 
