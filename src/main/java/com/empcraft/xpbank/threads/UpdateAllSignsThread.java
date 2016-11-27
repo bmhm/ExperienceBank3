@@ -33,7 +33,7 @@ public class UpdateAllSignsThread implements Runnable {
     Preconditions.checkNotNull(player, "Player in UpdateAllSignsThread.");
     Preconditions.checkState(player.isOnline(), "Player not online in UpdateAllSignsThread");
 
-    final Collection<Chunk> chunks = ChunkUtil.getLoadedChunksAroundLocation(location);
+    final Collection<Chunk> chunks = ChunkUtil.getLoadedChunksAroundLocation(location, expBankConfig);
     final List<BlockState> states = new ArrayList<>();
 
     for (Chunk chunk : chunks) {

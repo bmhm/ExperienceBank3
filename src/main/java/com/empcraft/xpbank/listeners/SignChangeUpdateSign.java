@@ -30,7 +30,7 @@ public class SignChangeUpdateSign implements Listener {
   @EventHandler
   public void onSignChange(SignChangeEvent event) {
     final Location loc = event.getBlock().getLocation();
-    final Collection<Chunk> chunks = ChunkUtil.getLoadedChunksAroundLocation(loc);
+    final Collection<Chunk> chunks = ChunkUtil.getLoadedChunksAroundLocation(loc, this.config);
 
     List<Player> myplayers = new ArrayList<>();
 

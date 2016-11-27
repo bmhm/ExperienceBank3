@@ -56,6 +56,7 @@ public class ConfigHelper {
     PowerMockito.doReturn(yamlConfig).when(plugin).getConfig();
 
     Logger logger = Logger.getLogger("TestLogger");
+    logger.setLevel(Level.ALL);
     PowerMockito.doReturn(logger).when(plugin).getLogger();
 
     return plugin;

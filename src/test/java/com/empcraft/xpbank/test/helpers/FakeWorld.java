@@ -1,5 +1,6 @@
 package com.empcraft.xpbank.test.helpers;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.bukkit.BlockChangeDelegate;
 import org.bukkit.Chunk;
 import org.bukkit.ChunkSnapshot;
@@ -15,6 +16,7 @@ import org.bukkit.WorldBorder;
 import org.bukkit.WorldType;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -29,6 +31,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.Collection;
@@ -37,6 +41,92 @@ import java.util.Set;
 import java.util.UUID;
 
 public class FakeWorld implements World {
+
+  private static final Logger LOG = LoggerFactory.getLogger(FakeWorld.class);
+
+  private final class StubChunkImplementation implements Chunk {
+    private final Location lctn;
+
+    private StubChunkImplementation(Location lctn) {
+      this.lctn = lctn;
+    }
+
+    @Override
+    public int getX() {
+      return lctn.getBlockX();
+    }
+
+    @Override
+    public int getZ() {
+      return lctn.getBlockZ();
+    }
+
+    @Override
+    public World getWorld() {
+      return lctn.getWorld();
+    }
+
+    @Override
+    public Block getBlock(int x, int y, int z) {
+      return lctn.getBlock();
+    }
+
+    @Override
+    public ChunkSnapshot getChunkSnapshot() {
+      return null;
+    }
+
+    @Override
+    public ChunkSnapshot getChunkSnapshot(boolean includeMaxblocky, boolean includeBiome, boolean includeBiomeTempRain) {
+      return null;
+    }
+
+    @Override
+    public Entity[] getEntities() {
+      return null;
+    }
+
+    @Override
+    public BlockState[] getTileEntities() {
+      return null;
+    }
+
+    @Override
+    public boolean isLoaded() {
+      return Math.random() < 0.5 ? true : false;
+    }
+
+    @Override
+    public boolean load(boolean generate) {
+      return false;
+    }
+
+    @Override
+    public boolean load() {
+      return false;
+    }
+
+    @Override
+    public boolean unload(boolean save, boolean safe) {
+      return false;
+    }
+
+    @Override
+    public boolean unload(boolean save) {
+      return false;
+    }
+
+    @Override
+    public boolean unload() {
+      return false;
+    }
+
+    @Override
+    public String toString() {
+      return ReflectionToStringBuilder.reflectionToString(this);
+    }
+  }
+
   private final String name;
   private final Environment env;
 
@@ -81,8 +171,9 @@ public class FakeWorld implements World {
   }
 
   @Override
-  public Chunk getChunkAt(Location lctn) {
-    throw new UnsupportedOperationException("Not supported yet.");
+  public Chunk getChunkAt(final Location lctn) {
+    LOG.debug("Location: [{}].", lctn);
+    return new StubChunkImplementation(lctn);
   }
 
   @Override
@@ -212,7 +303,7 @@ public class FakeWorld implements World {
 
   @Override
   public Location getSpawnLocation() {
-    throw new UnsupportedOperationException("Not supported yet.");
+    return new Location(this, 0.00D, 0.00D, 0.00D);
   }
 
   @Override

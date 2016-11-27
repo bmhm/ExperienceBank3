@@ -1,20 +1,20 @@
 /*
- * (c) Copyright 2016 Experiance Bank 3.
+ * (c) Copyright 2016 Experience Bank 3.
  *
- * This file is part of Experiance Bank 3.
+ * This file is part of Experience Bank 3.
  *
- * Experiance Bank 3 is free software: you can redistribute it and/or modify
+ * Experience Bank 3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Experiance Bank 3 is distributed in the hope that it will be useful,
+ * Experience Bank 3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Experiance Bank 3. If not, see <http://www.gnu.org/licenses/>.
+ * along with Experience Bank 3. If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -32,6 +32,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.logging.Level;
 
 public final class ChunkUtil {
 
@@ -57,10 +58,10 @@ public final class ChunkUtil {
     config.getLogger().log(java.util.logging.Level.FINER,
         "Getting Chunks around Player location: [" + playerLocation + "].");
 
-    return getLoadedChunksAroundLocation(playerLocation);
+    return getLoadedChunksAroundLocation(playerLocation, config);
   }
 
-  public static Collection<Chunk> getLoadedChunksAroundLocation(Location loc) {
+  public static Collection<Chunk> getLoadedChunksAroundLocation(Location loc, ExpBankConfig config) {
     Preconditions.checkNotNull(loc);
     final List<Chunk> chunkAroundList = new ArrayList<>();
     final World world = loc.getWorld();
@@ -71,8 +72,9 @@ public final class ChunkUtil {
      * If so, they will be added to the around list.
      */
     for (int x = -1; x <= 1; x++) {
-      for (int y = -1; y <= 1; y++) {
-        Optional<Chunk> chunk = getLoadedChunk(world, loc.add(x * 16.0D, 0.0D, y * 16.0D));
+      for (int z = -1; z <= 1; z++) {
+        config.getLogger().log(Level.FINER, "Requesting Chunk at X:[" + x + "], Z:[" + z + "].");
+        Optional<Chunk> chunk = getLoadedChunk(world, loc.clone().add(x * 16.0D, 0.0D, z * 16.0D));
 
         if (chunk.isPresent()) {
           chunkAroundList.add(chunk.get());
