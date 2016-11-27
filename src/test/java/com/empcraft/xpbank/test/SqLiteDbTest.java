@@ -33,7 +33,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
-
 /**
  *
  */
@@ -135,8 +134,26 @@ public class SqLiteDbTest {
   }
 
   @After
-  public void tearDown() {
-    config.getSqLiteDbFileName().delete();
+  public void tearDown() throws InterruptedException {
+    boolean deleted = config.getSqLiteDbFileName().delete();
+
+    if (deleted) {
+      return;
+    }
+
+    /*
+     * Try harder to delete DB after tests.
+     * BOGUS/XXX: May hang for up to 10s.
+     */
+    for (int tries = 0; tries < 10; tries++) {
+      Thread.sleep(1000L);
+      boolean tryDeleted = config.getSqLiteDbFileName().delete();
+
+      if (tryDeleted) {
+        break;
+      }
+    }
+
   }
 
 }

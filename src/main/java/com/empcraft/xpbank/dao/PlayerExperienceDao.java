@@ -25,10 +25,10 @@ import java.util.logging.Level;
 public abstract class PlayerExperienceDao extends BaseDao {
 
   private final String sqlCreate = "CREATE TABLE IF NOT EXISTS " + getTable()
-      + " ( UUID VARCHAR(36), EXP INT )";
+                                   + " ( UUID VARCHAR(36), EXP INT )";
 
   private final String sqlInsert = "INSERT INTO " + getTable()
-      + " VALUES(?, ?) WHERE NOT EXISTS (SELECT 1 FROM " + getTable() + " WHERE UUID = ?)";
+                                   + " VALUES(?, ?) WHERE NOT EXISTS (SELECT 1 FROM " + getTable() + " WHERE UUID = ?)";
 
   private final String sqlCount = "SELECT COUNT(*) from " + getTable();
 
