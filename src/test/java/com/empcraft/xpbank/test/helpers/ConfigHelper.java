@@ -14,7 +14,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.powermock.api.mockito.PowerMockito;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -28,8 +27,7 @@ public class ConfigHelper {
 
   private ExpBankConfig config;
 
-  public static ConfigHelper getFakeConfig() throws ConfigurationException, FileNotFoundException,
-      IOException, InvalidConfigurationException {
+  public static ConfigHelper getFakeConfig() throws ConfigurationException, IOException, InvalidConfigurationException {
     ConfigHelper confighelper = new ConfigHelper();
     JavaPlugin javaPlugin = mockJavaPlugin();
     ExpBankConfig cfg = new ExpBankConfig(javaPlugin);
@@ -39,7 +37,7 @@ public class ConfigHelper {
   }
 
   private static JavaPlugin mockJavaPlugin()
-      throws FileNotFoundException, IOException, InvalidConfigurationException {
+      throws IOException, InvalidConfigurationException {
     String topResourcePath = ConfigHelper.class.getResource("/").getPath();
     LOG.info("Using Datafolder: [" + topResourcePath + "].");
     File datafolder = new File(topResourcePath, "../classes");
@@ -64,7 +62,7 @@ public class ConfigHelper {
   }
 
   private static YamlConfiguration getYamlConfig()
-      throws FileNotFoundException, IOException, InvalidConfigurationException {
+      throws IOException, InvalidConfigurationException {
     File configfile = new File(testclassespath, "config.yml");
     LOG.info("Using config file [" + configfile.getAbsolutePath() + "].");
     YamlConfiguration configuration = new YamlConfiguration();
@@ -104,7 +102,7 @@ public class ConfigHelper {
 
   public ConfigHelper withBackend(String backend) throws DatabaseConnectorException {
     Backend be = Backend.getBackend(backend);
-    LOG.info("Using Backend [" + be.toString() + "].");
+    LOG.info("Using Backend [" + be + "].");
 
     PowerMockito.doReturn(be).when(config).getBackend();
     config.setupSqlite();

@@ -81,7 +81,7 @@ public class ExpBankConfig {
     }
   }
 
-  public void setupSqlite() throws DatabaseConnectorException {
+  public final void setupSqlite() throws DatabaseConnectorException {
     if (this.getSqLiteConnection() != null) {
       try {
         if (!this.getSqLiteConnection().isClosed()) {
@@ -92,7 +92,7 @@ public class ExpBankConfig {
       }
     }
 
-    if (Backend.SQLITE.equals(this.backend)) {
+    if (Backend.SQLITE == this.backend) {
       SqLite sql = new SqLite(getSqLiteDbFileName());
       this.sqLiteConnection = sql.openConnection();
     }
@@ -153,7 +153,7 @@ public class ExpBankConfig {
   /**
    * SQLite DB File name.
    *
-   * @return
+   * @return the sqlite db filename.
    */
   public File getSqLiteDbFileName() {
     return new File(plugin.getDataFolder(), DB_FILENAME);
@@ -274,7 +274,7 @@ public class ExpBankConfig {
   }
 
   public void closeSqliteConnection() {
-    if (!Backend.SQLITE.equals(backend)) {
+    if (Backend.SQLITE != backend) {
       return;
     }
 

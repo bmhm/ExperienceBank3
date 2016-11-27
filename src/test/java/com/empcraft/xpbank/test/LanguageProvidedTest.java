@@ -5,6 +5,7 @@ import com.empcraft.xpbank.err.ConfigurationException;
 import com.empcraft.xpbank.test.helpers.ConfigHelper;
 import com.empcraft.xpbank.text.Text;
 import com.empcraft.xpbank.text.YamlLanguageProvider;
+import com.google.common.collect.ImmutableList;
 
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -15,7 +16,6 @@ import org.junit.Test;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.rule.PowerMockRule;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.logging.Logger;
@@ -33,7 +33,7 @@ public class LanguageProvidedTest {
   private String[] languages = {};
 
   @Test
-  public void testEnglish() throws ConfigurationException, FileNotFoundException, IOException,
+  public void testEnglish() throws ConfigurationException, IOException,
       InvalidConfigurationException, URISyntaxException {
     ExpBankConfig config = ConfigHelper.getFakeConfig().withLanguage("english").build();
     YamlLanguageProvider ylp = new YamlLanguageProvider(config);
@@ -46,8 +46,7 @@ public class LanguageProvidedTest {
   }
 
   @Test
-  public void testAllLanguages() throws FileNotFoundException, ConfigurationException, IOException,
-      InvalidConfigurationException {
+  public void testAllLanguages() throws ConfigurationException, InvalidConfigurationException, IOException {
     for (String lang : languages) {
       if ("english".equals(lang)) {
         continue;
@@ -57,7 +56,7 @@ public class LanguageProvidedTest {
     }
   }
 
-  private void testLanguage(String lang) throws FileNotFoundException, ConfigurationException,
+  private void testLanguage(String lang) throws ConfigurationException,
       IOException, InvalidConfigurationException {
     ExpBankConfig config = ConfigHelper.getFakeConfig().withLanguage(lang).build();
     YamlLanguageProvider ylp = new YamlLanguageProvider(config);
@@ -67,6 +66,10 @@ public class LanguageProvidedTest {
       Assume.assumeNotNull(message);
       Assume.assumeFalse(!"".equals(message));
     }
+  }
+
+  public String[] getLanguages() {
+    return ImmutableList.<String>copyOf(languages).toArray(new String[] {});
   }
 
 }

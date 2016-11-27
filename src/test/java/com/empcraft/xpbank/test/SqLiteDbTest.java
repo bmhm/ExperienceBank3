@@ -23,7 +23,6 @@ import org.junit.Test;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.rule.PowerMockRule;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -47,7 +46,7 @@ public class SqLiteDbTest {
   private YamlLanguageProvider ylp;
 
   @Before
-  public void setUp() throws FileNotFoundException, ConfigurationException, IOException,
+  public void setUp() throws ConfigurationException, IOException,
       InvalidConfigurationException, DatabaseConnectorException {
     this.config = ConfigHelper.getFakeConfig().withBackend(Backend.SQLITE.toString()).build();
 
@@ -62,7 +61,7 @@ public class SqLiteDbTest {
   }
 
   @Test
-  public void testSqLite() throws ConfigurationException, FileNotFoundException, IOException,
+  public void testSqLite() throws ConfigurationException, IOException,
       InvalidConfigurationException, URISyntaxException, DatabaseConnectorException {
     Assert.assertNotNull(config.getSqLiteDbFileName());
     Assert.assertNotNull(config.getSqLiteConnection());

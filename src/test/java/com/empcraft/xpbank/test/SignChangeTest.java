@@ -26,7 +26,6 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.rule.PowerMockRule;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Set;
 
@@ -47,7 +46,7 @@ public class SignChangeTest {
   private SignChangeEvent invalidSignChangeEvent;
 
   @Before
-  public void setUp() throws ConfigurationException, FileNotFoundException, IOException,
+  public void setUp() throws ConfigurationException, IOException,
       InvalidConfigurationException {
     /* Set up Bukkit */
     try {
@@ -113,4 +112,11 @@ public class SignChangeTest {
     Assert.assertTrue(expBankSign);
   }
 
+  public Player getPriviledged() {
+    return this.privileged;
+  }
+
+  public YamlLanguageProvider getLangYml() {
+    return this.langYml;
+  }
 }

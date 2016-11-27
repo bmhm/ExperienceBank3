@@ -100,7 +100,7 @@ public class DataHelper {
         int oldExperience = player.getValue();
         ped.insertPlayerAndExperience(uuid, oldExperience);
         config.getLogger().log(Level.INFO,
-            "Inserted player [" + player.getKey().toString() + "] into the DB.");
+            "Inserted player [" + player.getKey() + "] into the DB.");
       }
 
       MessageUtils.sendMessageToConsole(ylp.getMessage(Text.DONE));
@@ -122,7 +122,7 @@ public class DataHelper {
    *          the conneciton to be closed.
    */
   private void specialCloseConnection(Connection connection) {
-    if (Backend.SQLITE.equals(config.getBackend())) {
+    if (Backend.SQLITE == config.getBackend()) {
       // Don't close SQLite connections.
       return;
     }
@@ -175,7 +175,7 @@ public class DataHelper {
     }
 
     config.getLogger().log(Level.INFO,
-        "Updated Experience of player [" + uuid.toString() + "] to [" + newExperience + "].");
+        "Updated Experience of player [" + uuid + "] to [" + newExperience + "].");
 
     return success;
   }
@@ -234,7 +234,7 @@ public class DataHelper {
     }
 
     config.getLogger().log(Level.INFO,
-        "Experience for player [" + uuid.toString() + "] is [" + result + "]xp in bank.");
+        "Experience for player [" + uuid + "] is [" + result + "]xp in bank.");
 
     return result;
   }
@@ -267,7 +267,7 @@ public class DataHelper {
     }
 
     config.getLogger().log(Level.INFO,
-        "Updated experience of player [" + uuid.toString() + "] by [" + delta + "].");
+        "Updated experience of player [" + uuid + "] by [" + delta + "].");
 
     return success;
   }
@@ -285,7 +285,7 @@ public class DataHelper {
     }
 
     config.getLogger().log(Level.INFO,
-        "Inserted new player [" + uuid.toString() + "] with 0 experience.");
+        "Inserted new player [" + uuid + "] with 0 experience.");
 
     return success;
   }

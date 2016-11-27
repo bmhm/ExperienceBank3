@@ -46,8 +46,11 @@ public final class PermissionsHelper {
 
   /**
    * Checks, if player player has the permission perm.
-   * @param player The player to check.
-   * @param permisson the permission to check.
+   * 
+   * @param player
+   *          The player to check.
+   * @param permission
+   *          the permission to check.
    * @return true, if player has the specified permission (directly or indirectly).
    */
   public static boolean playerHasPermission(Player player, ExpBankPermission permission) {

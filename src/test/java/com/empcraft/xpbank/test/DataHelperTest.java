@@ -147,7 +147,7 @@ public class DataHelperTest {
     UUID randomUUID = UUID.randomUUID();
     players.put(randomUUID, 42);
     dh.bulkSaveEntriesToDb(players);
-    config.getExperienceCache().addPlayer(randomUUID);
+    config.getExperienceCache().addPlayer(randomUUID, config);
     config.getExperienceCache().get(randomUUID).set(42);
 
     int savedExperience = dh.getSavedExperience(randomUUID);
@@ -181,7 +181,7 @@ public class DataHelperTest {
     UUID randomUUID = UUID.randomUUID();
     players.put(randomUUID, 42);
     dh.bulkSaveEntriesToDb(players);
-    config.getExperienceCache().addPlayer(randomUUID);
+    config.getExperienceCache().addPlayer(randomUUID, config);
     config.getExperienceCache().get(randomUUID).set(42);
 
     int savedExperience = dh.getSavedExperience(randomUUID);

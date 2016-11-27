@@ -15,10 +15,8 @@ public interface Database {
    * Opens a connection with the database.
    *
    * @return Opened connection
-   * @throws SQLException
+   * @throws DatabaseConnectorException
    *           if the connection can not be opened
-   * @throws ClassNotFoundException
-   *           if the driver cannot be found
    */
   public Connection openConnection() throws DatabaseConnectorException;
 
@@ -42,7 +40,7 @@ public interface Database {
    * Closes the connection with the database.
    *
    * @return true if successful
-   * @throws SQLEDataDatabaseConnectorExceptionbaseConnectorExceptionxception
+   * @throws DatabaseConnectorException
    *           if the connection cannot be closed
    */
   public boolean closeConnection() throws DatabaseConnectorException;

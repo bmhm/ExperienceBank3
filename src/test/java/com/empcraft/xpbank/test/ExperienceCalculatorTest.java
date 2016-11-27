@@ -22,21 +22,21 @@ public class ExperienceCalculatorTest {
   public void testGetLevel0() {
     int level = ExperienceLevelCalculator.getLevel(0);
 
-    Assert.assertTrue(level == 0);
+    Assert.assertEquals(0, level);
   }
 
   @Test
   public void testGetLevel6() {
     int level = ExperienceLevelCalculator.getLevel(6);
 
-    Assert.assertTrue(level == 0);
+    Assert.assertEquals(0, level);
   }
 
   @Test
   public void testGetLevel7() {
     int level = ExperienceLevelCalculator.getLevel(7);
 
-    Assert.assertTrue(level == 1);
+    Assert.assertEquals(1, level);
   }
 
   @Test

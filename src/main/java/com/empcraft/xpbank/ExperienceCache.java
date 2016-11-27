@@ -22,9 +22,12 @@ public class ExperienceCache extends ConcurrentHashMap<UUID, AtomicInteger> {
    */
   private static final long serialVersionUID = -8729259291859204345L;
 
-  public AtomicInteger addPlayer(UUID uuid) {
-    AtomicInteger atomicInteger = new AtomicInteger();
-    this.putIfAbsent(uuid, atomicInteger);
+  public AtomicInteger addPlayer(UUID uuid, final ExpBankConfig config) {
+    final AtomicInteger atomicInteger = new AtomicInteger();
+    AtomicInteger setValue = this.putIfAbsent(uuid, atomicInteger);
+    if (setValue != null) {
+      config.getLogger().info("Error inserting new Player with UUID [" + uuid + "].");
+    }
 
     return atomicInteger;
   }
@@ -32,7 +35,7 @@ public class ExperienceCache extends ConcurrentHashMap<UUID, AtomicInteger> {
   public void addExperience(Player player, int delta, final ExpBankConfig config,
       final YamlLanguageProvider language) {
     // contains putIfAbsent.
-    addPlayer(player.getUniqueId());
+    addPlayer(player.getUniqueId(), config);
 
     int newValue = this.get(player.getUniqueId()).addAndGet(delta);
 

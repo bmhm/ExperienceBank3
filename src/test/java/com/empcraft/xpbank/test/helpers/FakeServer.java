@@ -544,12 +544,12 @@ public class FakeServer implements Server {
   }
 
   @Override
-  public org.bukkit.OfflinePlayer getOfflinePlayer(UUID arg0) {
-    if (arg0.toString().equalsIgnoreCase("3c9ebe1a-9098-43fd-bc0c-a369b76817ba")) {
+  public org.bukkit.OfflinePlayer getOfflinePlayer(UUID playerUuid) {
+    if ("3c9ebe1a-9098-43fd-bc0c-a369b76817ba".equals(playerUuid.toString())) {
       return createOPlayer("testPlayer1");
     }
 
-    if (arg0.toString().equalsIgnoreCase("f4a37409-5c40-3b2c-9cd6-57d3c5abdc76")) {
+    if ("f4a37409-5c40-3b2c-9cd6-57d3c5abdc76".equals(playerUuid.toString())) {
       return createOPlayer("npc1");
     }
 

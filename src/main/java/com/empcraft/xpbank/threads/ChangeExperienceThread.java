@@ -55,7 +55,7 @@ public class ChangeExperienceThread implements Runnable {
       success = dh.updatePlayerExperienceDelta(player, delta);
     } catch (DatabaseConnectorException confEx) {
       config.getLogger().log(Level.WARNING,
-          "Could not change experience level for [" + player.toString() + "].",
+          "Could not change experience level for [" + player + "].",
           confEx);
       MessageUtils.sendMessageToConsole(ylp.getMessage(Text.MYSQL_GET));
       MessageUtils.sendMessageToPlayer(player, ylp.getMessage(Text.LOST));
@@ -63,7 +63,7 @@ public class ChangeExperienceThread implements Runnable {
 
     if (!success) {
       config.getLogger().log(Level.WARNING,
-          "Could not change experience level for [" + player.toString() + "].");
+          "Could not change experience level for [" + player + "].");
       MessageUtils.sendMessageToConsole(ylp.getMessage(Text.MYSQL_GET));
       MessageUtils.sendMessageToPlayer(player, ylp.getMessage(Text.LOST));
 

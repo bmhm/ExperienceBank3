@@ -18,7 +18,6 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.rule.PowerMockRule;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 
@@ -32,8 +31,8 @@ public class ExpBankConfigTest {
   private YamlLanguageProvider ylp;
 
   @Before
-  public void setUp() throws ConfigurationException, FileNotFoundException, IOException,
-      InvalidConfigurationException, DatabaseConnectorException {
+  public void setUp() throws IOException,
+      InvalidConfigurationException, DatabaseConnectorException, ConfigurationException {
     this.config = ConfigHelper.getFakeConfig().withLanguage("english")
         .withBackend(Backend.YAML.toString()).build();
     this.ylp = new YamlLanguageProvider(config);
@@ -63,7 +62,7 @@ public class ExpBankConfigTest {
     Assert.assertNotNull(mySqlDatabase);
     Assert.assertNotNull(mySqlHost);
     Assert.assertNotNull(mySqlPassword);
-    Assert.assertFalse(mySqlPort == 0);
+    Assert.assertNotEquals(0, mySqlPort);
     Assert.assertNotNull(mySqlUsername);
     Assert.assertNotNull(mySqlUserTable);
   }
@@ -71,5 +70,9 @@ public class ExpBankConfigTest {
   @Test
   public void testConfigSave() {
     config.saveConfig();
+  }
+
+  public YamlLanguageProvider getYlp() {
+    return this.ylp;
   }
 }

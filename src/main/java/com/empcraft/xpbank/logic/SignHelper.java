@@ -28,7 +28,7 @@ public final class SignHelper {
    *          the player who must be near.
    * @param sign
    *          the Sign to be updated.
-   * @param expBankConfig
+   * @param config
    *          The plugin config.
    */
   public static void updateSign(Player player, Sign sign, final ExpBankConfig config) {
@@ -143,6 +143,8 @@ public final class SignHelper {
    *          the player at the location which must be online.
    * @param location
    *          the location to update including nearby chunks.
+   * @param expBankConfig
+   *          the expBank config.
    */
   public static void scheduleUpdate(final Player player, final Location location,
       final ExpBankConfig expBankConfig) {

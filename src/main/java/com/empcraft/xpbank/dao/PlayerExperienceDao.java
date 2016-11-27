@@ -44,7 +44,7 @@ public abstract class PlayerExperienceDao extends BaseDao {
     super(conn, config);
   }
 
-  protected String getTable() {
+  protected final String getTable() {
     return getConfig().getMySqlUserTable();
   }
 
@@ -126,7 +126,7 @@ public abstract class PlayerExperienceDao extends BaseDao {
       st.close();
     } catch (SQLException sqlException) {
       getLogger().log(Level.SEVERE,
-          "Could set experience of player [" + player.toString() + "] to [" + newExperience + "].",
+          "Could set experience of player [" + player + "] to [" + newExperience + "].",
           sqlException);
     }
 
@@ -148,7 +148,7 @@ public abstract class PlayerExperienceDao extends BaseDao {
 
       st.close();
     } catch (SQLException sqlException) {
-      getLogger().log(Level.SEVERE, "Could not update experience for player [" + player.toString()
+      getLogger().log(Level.SEVERE, "Could not update experience for player [" + player
           + "] with [" + delta + "] experience points.", sqlException);
     }
 
@@ -195,7 +195,7 @@ public abstract class PlayerExperienceDao extends BaseDao {
       st.close();
     } catch (SQLException sqlException) {
       getLogger().log(Level.SEVERE,
-          "Could not get saved experience for player with UID [" + uniqueId.toString() + "].",
+          "Could not get saved experience for player with UID [" + uniqueId + "].",
           sqlException);
       throw new DatabaseConnectorException(sqlException);
     }

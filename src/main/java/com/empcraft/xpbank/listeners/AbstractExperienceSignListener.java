@@ -34,7 +34,7 @@ public abstract class AbstractExperienceSignListener implements Listener {
       Action desiredAction,
       Optional<Boolean> bottleRequiredInHand, Optional<Boolean> sneekingRequired) {
 
-    if (!desiredAction.equals(event.getAction())) {
+    if (desiredAction != event.getAction()) {
       return false;
     }
 
